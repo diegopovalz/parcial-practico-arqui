@@ -18,13 +18,13 @@ public class ClinicHistoryController {
         this.clinicHistoryService = clinicHistoryService;
     }
 
-    @PostMapping("/create")
+    @PostMapping(value = "/create", produces = "application/com.udea.hc-v1+json")
     public ResponseEntity<ClinicHistory> createClinicHistory(@RequestBody ClinicHistory clinicHistory) {
         clinicHistory = this.clinicHistoryService.createClinicHistory(clinicHistory);
         return new ResponseEntity<>(clinicHistory, HttpStatus.CREATED);
     }
 
-    @GetMapping("/all")
+    @GetMapping(value = "/all", produces = "application/com.udea.hc-v1+json")
     public ResponseEntity<List<ClinicHistory>> getPatientClinicHistories(@RequestParam String documentNumber) {
         List<ClinicHistory> histories = this.clinicHistoryService.getPatientHistories(documentNumber);
         return new ResponseEntity<>(histories, HttpStatus.OK);
