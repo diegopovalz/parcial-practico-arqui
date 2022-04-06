@@ -7,32 +7,23 @@ import lombok.NoArgsConstructor;
 import lombok.NonNull;
 
 import javax.persistence.*;
-import java.util.Date;
 
 @Entity
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class ClinicHistory {
+public class DoctorVersion2 {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @ApiModelProperty(hidden = true)
     private Long id;
 
-    @ManyToOne
-    @JoinColumn(name = "doctor_id")
-    private Doctor doctor;
-
-    @ManyToOne
-    @JoinColumn(name = "patient_id")
-    private Patient patient;
-
-    @Column(name = "illness", nullable = false, length = 80)
+    @Column(name = "documentNumber", nullable = false, length = 11)
     @NonNull
-    private String illness;
+    private String documentNumber;
 
-    @Column(name = "historyDate", nullable = false)
+    @Column(name = "fullName", nullable = false, length = 100)
     @NonNull
-    private Date historyDate;
+    private String fullName;
 }

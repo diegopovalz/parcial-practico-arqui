@@ -1,5 +1,7 @@
 package com.udea.rest.controller;
 
+import com.udea.rest.dto.ClinicHistoryDto;
+import com.udea.rest.factory.history.ClinicHistoryFactory;
 import com.udea.rest.model.ClinicHistory;
 import com.udea.rest.service.ClinicHistoryService;
 import io.swagger.annotations.Api;
@@ -18,9 +20,11 @@ import java.util.List;
 public class ClinicHistoryController {
 
     private final ClinicHistoryService clinicHistoryService;
+    private final ClinicHistoryFactory clinicHistoryFactory;
 
-    public ClinicHistoryController(final ClinicHistoryService clinicHistoryService) {
+    public ClinicHistoryController(final ClinicHistoryService clinicHistoryService, final ClinicHistoryFactory clinicHistoryFactory) {
         this.clinicHistoryService = clinicHistoryService;
+        this.clinicHistoryFactory = clinicHistoryFactory;
     }
 
     @PostMapping(value = "/create", produces = "application/com.udea.hc-v1+json")
@@ -29,7 +33,8 @@ public class ClinicHistoryController {
             @ApiResponse(code = 201, message = "Historia clínica creada"),
             @ApiResponse(code = 404, message = "No se encontró un paciente con la cédula ingresada")
     })
-    public ResponseEntity<ClinicHistory> createClinicHistory(@RequestBody ClinicHistory clinicHistory) {
+    public ResponseEntity<ClinicHistory> createClinicHistory(@RequestBody ClinicHistoryDto clinicHistoryDto) {
+        ClinicHistory clinicHistory = this.clinicHistoryFactory.createClinicHistory(clinicHistoryDto);
         clinicHistory = this.clinicHistoryService.createClinicHistory(clinicHistory);
         return new ResponseEntity<>(clinicHistory, HttpStatus.CREATED);
     }
